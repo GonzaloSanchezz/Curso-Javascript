@@ -20,31 +20,73 @@ function agregarNombre () {
     document.getElementById("bienvenida").innerText = "bienvenido a tu simulador de verduleria, " +respuesta
 }
 
-//pasar json a pagina de clientes
+// Local Storage para clientes
 
 nombre.addEventListener("change", setCliente)
 
-function setCliente () 
+function setCliente (){
+    let cliente = document.getElementById("nombre").value
+    localStorage.setItem('Cliente', cliente)
+} 
+
+// JSON
+
+const personas = [
+    {
+        id: 1,
+        persona: "juan",
+        compra: "1500"
+    },
+
+    {
+        id: 2,
+        persona: "maria",
+        compra: "2400"
+    },
+    
+    {
+        id: 3,
+        persona: nombre,
+
+    }
+]
+
+const clientesJSON = JSON.stringify(personas)
+
+localStorage.setItem('personas', clientesJSON)
 
 // calculadora de precios
 
-let cantManzana = document.getElementById("cantManzana").value;
-let cantPera = document.getElementById("cantPera").value;
-let cantBanana = document.getElementById("cantBanana").value;
-let cantMandarina = document.getElementById("cantMandarina").value;
+const form = document.getElementById('formulario')
+const botonTotal = document.getElementById('botonTotal')
 
-console.log(cantManzana)
-console.log(cantPera)
-console.log(cantBanana)
-console.log(cantMandarina)
+botonTotal.addEventListener('click', enviarForm)
 
-let botonTotal = document.getElementById("botonTotal")
+function enviarForm(e){
+
+    e.preventDefault();
+
+    let cantManzana = parseInt(document.getElementById("cantManzana").value);
+    let cantPera = parseInt(document.getElementById("cantBanana").value);
+    let cantBanana = parseInt(document.getElementById("cantPera").value);
+    let cantMandarina = parseInt(document.getElementById("cantMandarina").value);
+
+    console.log(cantManzana)
+    console.log(cantBanana)
+    console.log(cantPera)
+    console.log(cantMandarina)
+
+    const total = suma(cantManzana, cantPera, cantBanana, cantMandarina)
+    console.log(total)
+    document.getElementById("total").innerText = `el total es de  ${total}`
+}
+
 
 
 
 function suma(cantManzana, cantPera, cantBanana, cantMandarina){
-    let resultado = (cantManzana) + (cantPera) + (cantBanana) + (cantMandarina);
-    document.getElementById("total").innerText = "el total es de " + resultado
+    let resultado = (cantManzana * manzana) + (cantPera * pera) + (cantBanana * banana) + (cantMandarina * mandarina);
+    return resultado
 }
 
 botonTotal.onclick = () => {suma(cantManzana, cantPera, cantBanana, cantMandarina)}
